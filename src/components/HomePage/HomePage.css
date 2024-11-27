@@ -1,0 +1,98 @@
+.home-background {
+  background-image: url('../../assets/nightmare4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8); /* Optional: Adds a slight white overlay for readability */
+}
+
+.home-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+.home-description {
+  margin-bottom: 1rem;
+  color: #666;
+  text-align: center;
+}
+
+/* レスポンシブ対応のための追加 */
+@media (max-width: 640px) {
+  .home-title {
+    font-size: 1.5rem;
+  }
+  
+  .home-description {
+    font-size: 1rem;
+  }
+  
+  .home-buttons a {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .home-title {
+    font-size: 2rem;
+  }
+  
+  .home-description {
+    font-size: 1.25rem;
+  }
+  
+  .home-buttons a {
+    margin: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .home-title {
+    font-size: 2.5rem;
+  }
+  
+  .home-description {
+    font-size: 1.5rem;
+  }
+  
+  .home-buttons a {
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+  }
+}
+
+.home-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 641px) {
+  .home-buttons {
+    flex-direction: row;
+  }
+}
+
+.login-btn {
+  background-color: #3b82f6;
+}
+
+.signup-btn {
+  background-color: #10b981;
+}
