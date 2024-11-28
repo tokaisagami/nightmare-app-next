@@ -2,23 +2,24 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { logout } from '../../store/slices/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import Image from 'next/image'; // 追加
 import logo from '../../assets/Title-Logo2.png';
 
 const Header = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleLogout = () => {
     localStorage.removeItem('authToken'); // トークンをローカルストレージから削除
     dispatch(logout()); // ログイン状態を更新
-    navigate('/login'); // ログインページに遷移
+    router.push('/login'); // ログインページに遷移
   };
 
   return (
     <header className="bg-title text-white p-4 flex justify-between items-center fixed top-0 left-0 w-full z-50">
-      <img src={logo} alt="Nightmare App" className="h-8 sm:h-10 md:h-12 w-auto" />
+      <Image src={logo} alt="Nightmare App" className="h-8 sm:h-10 md:h-12 w-auto" />
       {isLoggedIn ? (
         <nav>
           <ul className="flex space-x-4">
