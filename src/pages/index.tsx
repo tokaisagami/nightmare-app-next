@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginPage from './components/Login/LoginPage';
-import Header from './components/Header/Header';
-import UserSignupPage from './components/Signup/UserSignupPage';
-import MainPage from './components/MainPage/MainPage';
-import NightmareDetail from './components/MainPage/NightmareDetail';
-import InputNightmare from './components/MainPage/InputNightmare';
-import DisplayNightmare from './components/MainPage/DisplayNightmare';
-import HomePage from './components/HomePage/HomePage';
-import MyPage from './components/MyPage/MyPage';
-import { login } from './store/slices/authSlice';
-import { startLoading, stopLoading } from './store/slices/loadingSlice'; // ローディングアクションのインポート
-import { RootState } from './store/store'; // RootStateをインポート
+import LoginPage from '../components/Login/LoginPage';
+import Header from '../components/Header/Header';
+import UserSignupPage from '../components/Signup/UserSignupPage';
+import MainPage from '../components/MainPage/MainPage';
+import NightmareDetail from '../components/MainPage/NightmareDetail';
+import InputNightmare from '../components/MainPage/InputNightmare';
+import DisplayNightmare from '../components/MainPage/DisplayNightmare';
+import HomePage from '../components/HomePage/HomePage';
+import MyPage from '../components/MyPage/MyPage';
+import { login } from '../store/slices/authSlice';
+import { startLoading, stopLoading } from '../store/slices/loadingSlice'; // ローディングアクションのインポート
+import { RootState } from '../store/store'; // RootStateをインポート
 import './loading.css'; // ローディング用のCSSをインポート
-import Loading from './components/Loading/Loading'; // カスタマイズしたローディングアニメーションをインポート
+import Loading from '../components/Loading/Loading'; // カスタマイズしたローディングアニメーションをインポート
 
 const routes = [
   { path: '/', element: <HomePage /> },
