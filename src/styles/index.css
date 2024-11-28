@@ -16,15 +16,20 @@ code {
     monospace;
 }
 
+.min-h-screen {
+  min-height: 100vh;
+  padding-top: 64px; /* ヘッダーの高さ分だけ余白を追加 */
+}
+
 /* メディアクエリの追加 */
 @media (max-width: 640px) {
-  body {
+  .App-header {
     font-size: 14px;
   }
 }
 
 @media (min-width: 641px) {
-  body {
+  .App-header {
     font-size: 16px;
   }
 }
