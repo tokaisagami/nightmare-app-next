@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from '../components/Login/LoginPage';
 import Header from '../components/Header/Header';
 import UserSignupPage from '../components/Signup/UserSignupPage';
@@ -11,10 +10,10 @@ import DisplayNightmare from '../components/MainPage/DisplayNightmare';
 import HomePage from '../components/HomePage/HomePage';
 import MyPage from '../components/MyPage/MyPage';
 import { login } from '../store/slices/authSlice';
-import { startLoading, stopLoading } from '../store/slices/loadingSlice'; // ローディングアクションのインポート
-import { RootState } from '../store/store'; // RootStateをインポート
-import './loading.css'; // ローディング用のCSSをインポート
-import Loading from '../components/Loading/Loading'; // カスタマイズしたローディングアニメーションをインポート
+import { startLoading, stopLoading } from '../store/slices/loadingSlice';
+import { RootState } from '../store/store';
+import './loading.css';
+import Loading from '../components/Loading/Loading';
 
 const routes = [
   { path: '/', element: <HomePage /> },
@@ -44,7 +43,8 @@ function App() {
       const userId = payload.user_id; // トークンのペイロードからユーザーIDを取得
 
       // バックエンドからユーザー情報を取得
-      fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/users/${userId}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      fetch(`${apiUrl}/api/v1/users/${userId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -67,20 +67,25 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Router>
-      <div className="min-h-screen pt-16"> {/* 64px(16rem)のパディングトップを追加 */}
-        <Header />
+    <>
+      <Header />
+      <div className="min-h-screen pt-16">
         {loading ? (
-          <Loading /> // カスタマイズしたローディングコンポーネントを表示
+          <Loading />
         ) : (
-          <Routes>
-            {routes.map((route, index) => (
-              <Route key={index} path={route.path} element={route.element} />
-            ))}
-          </Routes>
+          <>
+            <HomePage />
+            <LoginPage />
+            <UserSignupPage />
+            <MainPage />
+            <NightmareDetail />
+            <InputNightmare />
+            <DisplayNightmare />
+            <MyPage />
+          </>
         )}
       </div>
-    </Router>
+    </>
   );
 }
 
