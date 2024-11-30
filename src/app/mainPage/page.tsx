@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PostCard from './components/PostCard';
-import { Link, useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Loading from '../components/Loading';
-import MainpageTitle from '../../assets/Mainpage-title.png';
+import Image from 'next/image';
 
 interface Nightmare {
   id: number;
@@ -14,7 +15,7 @@ interface Nightmare {
 }
 
 const MainPage: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [nightmares, setNightmares] = useState<Nightmare[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -64,7 +65,7 @@ const MainPage: React.FC = () => {
   return (
     <div className="flex flex-col justify-center items-center mt-8">
       <button
-        onClick={() => navigate('/input-nightmare')}
+        onClick={() => router.push('/input-nightmare')}
         className="bg-blue-500 text-white text-xl px-6 py-4 rounded-xl mb-4 font-KosugiMaru border-double border-4 border-white"
       >
         悪夢を改変する
@@ -72,19 +73,21 @@ const MainPage: React.FC = () => {
       <div className="bg-pink-100 shadow-lg p-6 rounded-lg w-[95%] mx-auto border border-gray-300">
         <header className="main-header text-center mb-6">
           <div>
-            <img src={MainpageTitle} alt="みんなの悪夢" className="mx-auto mb-4" />
+            <Image src="/images/Mainpage-title.png" alt="みんなの悪夢" className="mx-auto mb-4" />
           </div>
         </header>
         <main className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {currentNightmares.map((nightmare) => (
-            <Link key={nightmare.id} to={`/nightmares/${nightmare.id}`}>
-              <PostCard
-                description={nightmare.description.length > 50 ? nightmare.description.substring(0, 50) + '...' : nightmare.description}
-                modified_description={nightmare.modified_description}
-                author={nightmare.author}
-                ending_category={nightmare.ending_category}
-                created_at={nightmare.created_at}
-              />
+            <Link key={nightmare.id} href={`/nightmares/${nightmare.id}`}>
+              <a>
+                <PostCard
+                  description={nightmare.description.length > 50 ? nightmare.description.substring(0, 50) + '...' : nightmare.description}
+                  modified_description={nightmare.modified_description}
+                  author={nightmare.author}
+                  ending_category={nightmare.ending_category}
+                  created_at={nightmare.created_at}
+                />
+              </a>
             </Link>
           ))}
         </main>
