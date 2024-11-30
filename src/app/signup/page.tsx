@@ -1,7 +1,8 @@
+"use client";
 import React, { useEffect, useState, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from '../../store/slices/registerSlice';
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { zxcvbn, zxcvbnOptions } from '@zxcvbn-ts/core'
@@ -22,12 +23,12 @@ const UserSignupPage: React.FC = () => {
 
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/users`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +46,11 @@ const UserSignupPage: React.FC = () => {
       if (response.ok) {
         console.log('Signup successful:', data);
         dispatch(register());
-        navigate('/login', { state: { email, password, message: 'ユーザー登録が成功しました！', messageType: 'success' } });
+        navigate.push(`/login?email=${encodeURIComponent(email)}&
+                              password=${encodeURIComponent(password)}&
+                              message=${encodeURIComponent('ユーザー登録が成功しました！')}&
+                              messageType=success`
+        );
       } else {
         console.error('Signup failed:', data);
         setMessage('ユーザー登録に失敗しました。もう一度お試しください。');
