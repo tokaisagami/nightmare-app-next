@@ -45,18 +45,22 @@ const MainPage: React.FC = () => {
         if (!response.ok) {
           throw new Error('Failed to fetch nightmares');
         }
-        const data = await response.json();
+        const data: Nightmare[] = await response.json(); // 型を指定
         setNightmares(data);
         console.log(data);
-      } catch (error: any) {
-        setError(error.message);
+      } catch (error) {
+        if (error instanceof Error) { // 型ガードを追加
+          setError(error.message);
+        } else {
+          setError('Unexpected error occurred');
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchNightmares();
   }, []);
-
+  
   if (loading) {
     return <Loading />;
   }
