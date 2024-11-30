@@ -9,7 +9,7 @@ interface PostCardProps {
   created_at: string; // 文字列型に変更
 }
 
-const PostCard: React.FC<PostCardProps> = ({ description, modified_description, author, ending_category, created_at }) => {
+const PostCard: React.FC<PostCardProps> = ({ author, ending_category, created_at }) => {
   // サムネイル画像の決定
   const endingImage = {
     happy_end: '/images/nightmare-card/HAPPY-END.png',
