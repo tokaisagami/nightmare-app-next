@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { FaSquareXTwitter } from "react-icons/fa6";
 
 const DisplayNightmare: React.FC = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   const description = searchParams.get('description') ?? '';
