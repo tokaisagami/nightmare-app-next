@@ -1,17 +1,18 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FaSquareXTwitter } from "react-icons/fa6";
+import Link from 'next/link';
 
 const DisplayNightmare: React.FC = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
 
-  const description = searchParams.get('description') ?? '';
-  const modified_description = searchParams.get('modified_description') ?? '';
-  const ending_category = searchParams.get('ending_category') ?? '0';
-  
+  const description = searchParams?.get('description') ?? '';
+  const modified_description = searchParams?.get('modified_description') ?? '';
+  const ending_category = searchParams?.get('ending_category') ?? '0';
+
   const [showModal, setShowModal] = useState(false);
   const [nightmareId, setNightmareId] = useState<number | null>(null);
   const [tweetUrl, setTweetUrl] = useState<string>('');
