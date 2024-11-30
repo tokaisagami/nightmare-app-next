@@ -1,12 +1,13 @@
+"use client";
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Loading from '../Loading/Loading';
+import { useRouter } from 'next/router';
+import Loading from '../components/Loading';
 
 const InputNightmare: React.FC = () => {
   const [description, setDescription] = useState('');
   const [ending_category, setEnding_category] = useState('0');
   const [loading, setLoading] = useState(false); // ローディング状態を管理するStateを追加
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,7 +15,7 @@ const InputNightmare: React.FC = () => {
     const token = localStorage.getItem('authToken');
     console.log('Token:', token);
 
-    const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/nightmares/modify`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/nightmares/modify`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,8 +36,9 @@ const InputNightmare: React.FC = () => {
     setLoading(false); // ローディング終了
 
     // 改変結果を表示する画面に遷移する処理を追加
-    navigate('/modified-nightmare', {
-      state: {
+    navigate.push({
+      pathname: '/modified-nightmare',
+      query: {
         modified_description: data.modified_description,
         description: description,
         ending_category: ending_category
