@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Header from './components/Header/Header';
-import HomePage from './components/HomePage/HomePage';
-import Loading from './components/Loading/Loading';
+import Header from './components/Header';
+import HomePage from './components/HomePage';
+import Loading from './components/Loading';
 import { login } from '../store/slices/authSlice';
 import { startLoading, stopLoading } from '../store/slices/loadingSlice';
 import { RootState } from '../store/store';

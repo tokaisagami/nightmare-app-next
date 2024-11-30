@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../../store/store';
-import { logout } from '../../../store/slices/authSlice';
+import { RootState } from '../../store/store';
+import { logout } from '../../store/slices/authSlice';
 import { useRouter } from 'next/router';
 import Image from 'next/image'; // 追加
 
