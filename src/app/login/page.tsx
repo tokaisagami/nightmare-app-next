@@ -35,7 +35,7 @@ const LoginPage = () => {
         const user = { id: data.user_id, name: data.user_name, email: data.user_email }; // idを追加
         console.log(user);
         dispatch(login(user));  // ユーザー情報を渡してログイン状態を更新
-        router.push('/mainPage'); // 仮のトップページに遷移
+        router.push('/mainPage');
       } else {
         console.error('Login failed:', data);
         setMessage('ログインに失敗しました。メールアドレスまたはパスワードが間違っています。');
