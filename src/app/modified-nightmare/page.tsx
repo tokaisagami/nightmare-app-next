@@ -12,13 +12,13 @@ const DisplayNightmare: React.FC = () => {
 
   useEffect(() => {
     if (nightmareId !== null) {
-      setTweetUrl(`https://twitter.com/intent/tweet?text=改変された悪夢を共有します！&url=${import.meta.env.VITE_APP_DOMAIN_NAME}/nightmares/${nightmareId}`);
+      setTweetUrl(`https://twitter.com/intent/tweet?text=改変された悪夢を共有します！&url=${process.env.NEXT_PUBLIC_API_URL}/nightmares/${nightmareId}`);
     }
   }, [nightmareId]);
 
   const handlePost = async () => {
     const token = localStorage.getItem('authToken');
-    const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/nightmares`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/nightmares`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -49,10 +49,10 @@ const DisplayNightmare: React.FC = () => {
       <div className="flex flex-col justify-center items-center mt-8">
         {nightmareId && (
           <Helmet>
-            <meta property="og:image" content={`${import.meta.env.VITE_APP_DOMAIN_NAME}/images/nightmare-app_OGP.png`} />
+            <meta property="og:image" content={`${process.env.NEXT_PUBLIC_API_URL}/images/nightmare-app_OGP.png`} />
             <meta property="og:description" content="AIで悪夢を改変し、すっきりした気分になりましょう！" />
             <meta property="og:title" content="Nightmare App" />
-            <meta property="og:url" content={`${import.meta.env.VITE_APP_DOMAIN_NAME}/nightmares/${nightmareId}`} />
+            <meta property="og:url" content={`${process.env.NEXT_PUBLIC_API_URL}/nightmares/${nightmareId}`} />
             <meta property="og:type" content="website" />
             <meta property="og:site_name" content="Nightmare App" />
             <meta name="twitter:card" content="summary_large_image" />
