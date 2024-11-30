@@ -1,6 +1,5 @@
 import React from 'react';
-import HappyEnd from '../../../assets/nightmare-card/HAPPY-END.png';
-import UnexpectedEnd from '../../../assets/nightmare-card/unexpected-end.png';
+import Image from 'next/image'; // 追加
 
 interface PostCardProps {
   description: string;
@@ -13,8 +12,8 @@ interface PostCardProps {
 const PostCard: React.FC<PostCardProps> = ({ description, modified_description, author, ending_category, created_at }) => {
   // サムネイル画像の決定
   const endingImage = {
-    happy_end: HappyEnd,
-    unexpected_end: UnexpectedEnd
+    happy_end: '/images/nightmare-card/HAPPY-END.png',
+    unexpected_end: '/images/nightmare-card/unexpected-end.png'
   }[ending_category];
 
   // ending_categoryに基づく表示内容を決定
@@ -36,7 +35,7 @@ const PostCard: React.FC<PostCardProps> = ({ description, modified_description, 
 
   return (
     <div className="post-card p-4 mb-4 rounded-xl shadow-lg bg-white h-full border-solid border-4 border-gray-300">
-      {endingImage && <img src={endingImage} alt="サムネイル" className="mx-auto mb-4" />}
+      {endingImage && <Image src={endingImage} alt="サムネイル" className="mx-auto mb-4" />}
       <h3 className="text-lg md:text-lg lg:text-lg font-semibold text-center mb-4 font-KaiseiOpti">{author}さんの悪夢</h3>
       <p className="text-sm text-gray-700 mb-4 font-KaiseiOpti">
         <span className={`inline-block ${endingColor}`}>■</span> {endingText}
