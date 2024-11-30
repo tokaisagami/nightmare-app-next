@@ -1,11 +1,18 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { Link, useLocation } from 'react-router-dom';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { FaSquareXTwitter } from "react-icons/fa6";
 
 const DisplayNightmare: React.FC = () => {
-  const location = useLocation();
-  const { modified_description, description, ending_category } = location.state;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const description = searchParams.get('description') ?? '';
+  const modified_description = searchParams.get('modified_description') ?? '';
+  const ending_category = searchParams.get('ending_category') ?? '0';
+  
   const [showModal, setShowModal] = useState(false);
   const [nightmareId, setNightmareId] = useState<number | null>(null);
   const [tweetUrl, setTweetUrl] = useState<string>('');
@@ -41,8 +48,6 @@ const DisplayNightmare: React.FC = () => {
     setNightmareId(data.id);
     setShowModal(true);
   };
-
-  console.log(tweetUrl);
 
   return (
     <HelmetProvider>
@@ -93,7 +98,9 @@ const DisplayNightmare: React.FC = () => {
         )}
 
         <div className="mt-4 text-center">
-          <Link to="/mainPage" className="text-blue-500 hover:text-blue-700 font-KosugiMaru">メインページへ</Link>
+          <Link href="/mainPage">
+            <a className="text-blue-500 hover:text-blue-700 font-KosugiMaru">メインページへ</a>
+          </Link>
         </div>
       </div>
     </HelmetProvider>
