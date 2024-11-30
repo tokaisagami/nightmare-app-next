@@ -19,7 +19,6 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Nightmare App",
   description: "AIで悪夢を改変し、すっきりした気分になりましょう！",
-  themeColor: "#000000",
   openGraph: {
     type: 'website',
     url: 'https://nightmare-app-frontend.vercel.app/',
