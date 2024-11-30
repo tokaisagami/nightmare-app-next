@@ -33,7 +33,6 @@ const NightmareDetail: React.FC = () => {
       if (token) {
         headers['Authorization'] = `Bearer ${token}`;
       }
-
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/nightmares/${id}`, {
           headers: headers
@@ -41,15 +40,19 @@ const NightmareDetail: React.FC = () => {
         if (!response.ok) {
           throw new Error('Failed to fetch nightmare');
         }
-        const data = await response.json();
+        const data: Nightmare = await response.json(); // 型を指定
         setNightmare(data);
-      } catch (error: any) {
-        setError(error.message);
+      } catch (error) {
+        if (error instanceof Error) { // 型ガードを追加
+          setError(error.message);
+        } else {
+          setError('Unexpected error occurred');
+        }
       } finally {
         setLoading(false);
       }
     };
-    fetchNightmare();
+      fetchNightmare();
   }, [id]);
 
   if (loading) {
