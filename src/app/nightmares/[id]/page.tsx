@@ -1,6 +1,8 @@
+"use client";
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import Loading from '../Loading/Loading';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Loading from '../../components/Loading';
 
 interface Nightmare {
   id: number;
@@ -10,7 +12,9 @@ interface Nightmare {
 }
 
 const NightmareDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const router = useRouter();
+  const { id } = router.query; // useRouterを使用
+
   const [nightmare, setNightmare] = useState<Nightmare | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +35,7 @@ const NightmareDetail: React.FC = () => {
       }
 
       try {
-        const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/nightmares/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/nightmares/${id}`, {
           headers: headers
         });
         if (!response.ok) {
@@ -69,19 +73,23 @@ const NightmareDetail: React.FC = () => {
           {nightmare.description}
         </p>
         <h3 className="text-lg font-semibold mb-2 font-KaiseiOpti">
-        <span className="inline-block text-indigo-400">■</span> 改変された結末：
+          <span className="inline-block text-indigo-400">■</span> 改変された結末：
         </h3>
         <p className="text-gray-700 text-base md:text-base lg:text-base mb-2 break-words">
           {nightmare.modified_description}
         </p>
       </div>
       {isAuthenticated ? (
-        <Link to="/mainPage" className="block font-KosugiMaru text-center mt-6 text-blue-600 hover:text-blue-400 text-lg md:text-xl">
-          メインページへ
+        <Link href="/mainPage">
+          <a className="block font-KosugiMaru text-center mt-6 text-blue-600 hover:text-blue-400 text-lg md:text-xl">
+            メインページへ
+          </a>
         </Link>
       ) : (
-        <Link to="/" className="block text-center mt-6 text-blue-600 hover:text-blue-400 text-lg md:text-xl">
-          新規登録へ
+        <Link href="/">
+          <a className="block text-center mt-6 text-blue-600 hover:text-blue-400 text-lg md:text-xl">
+            新規登録へ
+          </a>
         </Link>
       )}
     </div>
