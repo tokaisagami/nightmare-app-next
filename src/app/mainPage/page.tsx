@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PostCard from './components/PostCard';
 import { Link, useNavigate } from 'react-router-dom';
-import Loading from '../Loading/Loading';
+import Loading from '../components/Loading';
 import MainpageTitle from '../../assets/Mainpage-title.png';
 
 interface Nightmare {
@@ -34,7 +34,7 @@ const MainPage: React.FC = () => {
       const token = localStorage.getItem('authToken');
       console.log('Token:', token);
       try {
-        const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/nightmares`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/nightmares`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
