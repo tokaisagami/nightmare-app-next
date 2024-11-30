@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import PostCard from './components/PostCard';
 import { useRouter } from 'next/router';
