@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image'; // 追加
+import Image from 'next/image';
 
 interface PostCardProps {
   description: string;
