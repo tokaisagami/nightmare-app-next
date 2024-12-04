@@ -5,8 +5,8 @@ interface PostCardProps {
   description: string;
   modified_description: string;
   author: string;
-  ending_category: string; // 文字列型に変更
-  created_at: string; // 文字列型に変更
+  ending_category: string;
+  created_at: string;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ author, ending_category, created_at }) => {

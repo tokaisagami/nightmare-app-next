@@ -1,4 +1,4 @@
-"use client"; // クライアントコンポーネントとして指定
+"use client";
 
 import React, { useState, useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
