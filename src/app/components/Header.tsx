@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { logout } from '../../store/slices/authSlice';
 import { useRouter } from 'next/router';
-import Image from 'next/image'; // 追加
+import Image from 'next/image';
 
 const Header = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
