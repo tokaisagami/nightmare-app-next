@@ -14,7 +14,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem('authToken'); // トークンをローカルストレージから削除
     dispatch(logout()); // ログイン状態を更新
-    router.push('/login'); // ログインページに遷移
+    router.push('/login');
   };
 
   return (
