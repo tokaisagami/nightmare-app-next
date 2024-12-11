@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link'; // 修正
+import Link from 'next/link';
 import '../../styles/HomePage.css';
 
 const HomePage: React.FC = () => {
