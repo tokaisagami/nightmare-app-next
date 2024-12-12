@@ -13,7 +13,7 @@ interface Nightmare {
 
 const NightmareDetail: React.FC = () => {
   const router = useRouter();
-  const { id } = router.query; // useRouterを使用
+  const { id } = router.query;
 
   const [nightmare, setNightmare] = useState<Nightmare | null>(null);
   const [loading, setLoading] = useState(true);
