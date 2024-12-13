@@ -1,5 +1,5 @@
 import React from 'react';
-import ModifiedNightmare from './components/modifiedNightmare';
+import ModifiedNightmare from './components/ModifiedNightmare';
 
 const ModifiedNightmarePage: React.FC = () => {
   return <ModifiedNightmare />;
