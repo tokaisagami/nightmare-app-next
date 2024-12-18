@@ -1,5 +1,5 @@
 import React from 'react';
-import MyPageClient from './components/MyPage';
+import MyPageClient from './components/MyPageClient';
 
 const MyPage: React.FC = () => {
   return <MyPageClient />;
