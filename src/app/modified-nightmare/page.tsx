@@ -1,8 +1,8 @@
 import React from 'react';
-import ModifiedNightmare from './components/ModifiedNightmare';
+import DisplayNightmare from './components/DisplayNightmare';
 
 const ModifiedNightmarePage: React.FC = () => {
-  return <ModifiedNightmare />;
+  return <DisplayNightmare />;
 };
 
 export default ModifiedNightmarePage;
