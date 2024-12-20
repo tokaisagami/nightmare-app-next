@@ -1,7 +1,9 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  reactStrictMode: true,
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
+  pageExtensions: ['tsx', 'ts'],  // ページ拡張子の設定
 };
 
-export default nextConfig;
+module.exports = nextConfig;

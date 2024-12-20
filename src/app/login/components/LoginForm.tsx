@@ -1,16 +1,18 @@
+"use client";
+
 import React, { useState, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { login } from '../../store/slices/authSlice';
+import { login } from '../../../store/slices/authSlice';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-const LoginPage = () => {
+const LoginForm: React.FC = () => {
   const router = useRouter();
   const state = router.query as { email?: string; password?: string; message?: string; messageType?: 'success' | 'error' };
 
-  const [email, setEmail] = useState(state?.email || ''); // 初期状態を遷移時の状態に設定
+  const [email, setEmail] = useState(state?.email || '');
   const [password, setPassword] = useState(state?.password || '');
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState(state?.message || null);
@@ -31,11 +33,11 @@ const LoginPage = () => {
       const data = await response.json();
       if (response.ok) {
         console.log('Login successful:', data);
-        localStorage.setItem('authToken', data.token); // トークンをローカルストレージに保存
-        const user = { id: data.user_id, name: data.user_name, email: data.user_email }; // idを追加
+        localStorage.setItem('authToken', data.token);
+        const user = { id: data.user_id, name: data.user_name, email: data.user_email };
         console.log(user);
-        dispatch(login(user));  // ユーザー情報を渡してログイン状態を更新
-        router.push('/mainPage'); // 仮のトップページに遷移
+        dispatch(login(user));
+        router.push('/mainPage');
       } else {
         console.error('Login failed:', data);
         setMessage('ログインに失敗しました。メールアドレスまたはパスワードが間違っています。');
@@ -52,7 +54,7 @@ const LoginPage = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md border border-gray-300 w-full max-w-md">
         <h1 className="text-2xl mb-4 text-center font-KaiseiOpti">ログイン</h1>
-        {message && (  // メッセージ表示部分を追加
+        {message && (
           <div className={`p-4 mb-4 text-sm rounded ${messageType === 'success' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}>
             {message}
           </div>
@@ -106,4 +108,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginForm;

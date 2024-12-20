@@ -1,24 +1,37 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { Link, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'next/navigation';
 import { FaSquareXTwitter } from "react-icons/fa6";
+import Link from 'next/link';
 
 const DisplayNightmare: React.FC = () => {
-  const location = useLocation();
-  const { modified_description, description, ending_category } = location.state;
+  const searchParams = useSearchParams();
+  const [description, setDescription] = useState<string>('');
+  const [modifiedDescription, setModifiedDescription] = useState<string>('');
+  const [endingCategory, setEndingCategory] = useState<string>('0');
   const [showModal, setShowModal] = useState(false);
   const [nightmareId, setNightmareId] = useState<number | null>(null);
   const [tweetUrl, setTweetUrl] = useState<string>('');
 
   useEffect(() => {
+    if (searchParams) {
+      setDescription(searchParams.get('description') || '');
+      setModifiedDescription(searchParams.get('modified_description') || '');
+      setEndingCategory(searchParams.get('ending_category') || '0');
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
     if (nightmareId !== null) {
-      setTweetUrl(`https://twitter.com/intent/tweet?text=改変された悪夢を共有します！&url=${import.meta.env.VITE_APP_DOMAIN_NAME}/nightmares/${nightmareId}`);
+      setTweetUrl(`https://twitter.com/intent/tweet?text=改変された悪夢を共有します！&url=${process.env.NEXT_PUBLIC_API_URL}/nightmares/${nightmareId}`);
     }
   }, [nightmareId]);
 
   const handlePost = async () => {
     const token = localStorage.getItem('authToken');
-    const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/nightmares`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/nightmares`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -26,8 +39,8 @@ const DisplayNightmare: React.FC = () => {
       },
       body: JSON.stringify({
         description: description,
-        modified_description: modified_description,
-        ending_category: parseInt(ending_category, 10),
+        modified_description: modifiedDescription,
+        ending_category: parseInt(endingCategory, 10),
         published: true
       })
     });
@@ -42,17 +55,15 @@ const DisplayNightmare: React.FC = () => {
     setShowModal(true);
   };
 
-  console.log(tweetUrl);
-
   return (
     <HelmetProvider>
       <div className="flex flex-col justify-center items-center mt-8">
         {nightmareId && (
           <Helmet>
-            <meta property="og:image" content={`${import.meta.env.VITE_APP_DOMAIN_NAME}/images/nightmare-app_OGP.png`} />
+            <meta property="og:image" content={`${process.env.NEXT_PUBLIC_API_URL}/images/nightmare-app_OGP.png`} />
             <meta property="og:description" content="AIで悪夢を改変し、すっきりした気分になりましょう！" />
             <meta property="og:title" content="Nightmare App" />
-            <meta property="og:url" content={`${import.meta.env.VITE_APP_DOMAIN_NAME}/nightmares/${nightmareId}`} />
+            <meta property="og:url" content={`${process.env.NEXT_PUBLIC_API_URL}/nightmares/${nightmareId}`} />
             <meta property="og:type" content="website" />
             <meta property="og:site_name" content="Nightmare App" />
             <meta name="twitter:card" content="summary_large_image" />
@@ -63,7 +74,7 @@ const DisplayNightmare: React.FC = () => {
         <div className="bg-green-50 shadow-lg p-6 rounded-lg w-[95%] mx-auto border-solid border-2 border-green-300">
           <h1 className="text-2xl font-bold mb-4 font-KaiseiOpti">改変された悪夢内容</h1>
           <div className="bg-green-100 shadow-lg border-solid rounded-lg p-6 border-2 border-green-300">
-            <p className="whitespace-pre-wrap text-base">{modified_description}</p>
+            <p className="whitespace-pre-wrap text-base">{modifiedDescription}</p>
           </div>
           <button onClick={handlePost} className="bg-blue-500 text-white font-KosugiMaru px-4 py-2 rounded mt-4">
             投稿する
@@ -93,7 +104,9 @@ const DisplayNightmare: React.FC = () => {
         )}
 
         <div className="mt-4 text-center">
-          <Link to="/mainPage" className="text-blue-500 hover:text-blue-700 font-KosugiMaru">メインページへ</Link>
+          <Link href="/mainPage">
+            <a className="text-blue-500 hover:text-blue-700 font-KosugiMaru">メインページへ</a>
+          </Link>
         </div>
       </div>
     </HelmetProvider>

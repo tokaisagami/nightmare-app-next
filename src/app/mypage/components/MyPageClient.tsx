@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { Link } from 'react-router-dom';
-import Loading from '../Loading/Loading';
+import { RootState } from '../../../store/store';
+import Link from 'next/link';
+import Loading from '../../components/Loading';
 
 interface Nightmare {
   id: number;
@@ -13,17 +15,16 @@ interface Nightmare {
   created_at: string;
 }
 
-const MyPage: React.FC = () => {
+const MyPageClient: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [nightmares, setNightmares] = useState<Nightmare[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // useEffect以降の部分
   useEffect(() => {
     if (user?.id) {
       const fetchNightmares = async () => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/users/${user.id}`, {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${user.id}`, {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
               'Content-Type': 'application/json',
@@ -42,10 +43,9 @@ const MyPage: React.FC = () => {
     }
   }, [user?.id]);
 
-  // 非公開にする関数を追加
   const handleUnpublish = async (nightmareId: number) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/nightmares/${nightmareId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/nightmares/${nightmareId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
@@ -68,7 +68,7 @@ const MyPage: React.FC = () => {
 
   const handlePublish = async (nightmareId: number) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/nightmares/${nightmareId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/nightmares/${nightmareId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
@@ -145,11 +145,13 @@ const MyPage: React.FC = () => {
           )}
         </div>
         <div className="mt-4 text-center">
-          <Link to="/mainPage" className="text-blue-500 hover:text-blue-700 font-KosugiMaru">メインページへ</Link>
+          <Link href="/mainPage">
+            <a className="text-blue-500 hover:text-blue-700 font-KosugiMaru">メインページへ</a>
+          </Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default MyPage;
+export default MyPageClient;

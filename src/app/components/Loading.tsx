@@ -1,5 +1,6 @@
+"use client";
 import React, { useEffect, useState } from 'react';
-import { BounceLetterLoader, DotLoader } from 'react-spinner-overlay'; // BounceLetterLoaderをインポート
+import { DotLoader } from 'react-spinner-overlay';
 
 const Loading: React.FC = () => {
   const [loading, setLoading] = useState(true);

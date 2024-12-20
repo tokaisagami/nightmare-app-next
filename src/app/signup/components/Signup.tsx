@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useEffect, useState, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { register } from '../../store/slices/registerSlice';
-import { useNavigate } from 'react-router-dom'
+import { register } from '../../../store/slices/registerSlice';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { zxcvbn, zxcvbnOptions } from '@zxcvbn-ts/core'
@@ -9,7 +11,7 @@ import { ZxcvbnResult } from '@zxcvbn-ts/core/src/types'
 import * as zxcvbnCommonPackage from '@zxcvbn-ts/language-common'
 import * as zxcvbnJaPackage from '@zxcvbn-ts/language-ja'
 
-const UserSignupPage: React.FC = () => {
+const SignupForm: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,20 +22,19 @@ const UserSignupPage: React.FC = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [messageType, setMessageType] = useState<'success' | 'error' | null>(null);
 
-
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v1/users`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user: { // user パラメータをネストする
+          user: {
             name,
             email,
             password,
@@ -45,7 +46,11 @@ const UserSignupPage: React.FC = () => {
       if (response.ok) {
         console.log('Signup successful:', data);
         dispatch(register());
-        navigate('/login', { state: { email, password, message: 'ユーザー登録が成功しました！', messageType: 'success' } });
+        navigate.push(`/login?email=${encodeURIComponent(email)}&
+                              password=${encodeURIComponent(password)}&
+                              message=${encodeURIComponent('ユーザー登録が成功しました！')}&
+                              messageType=success`
+        );
       } else {
         console.error('Signup failed:', data);
         setMessage('ユーザー登録に失敗しました。もう一度お試しください。');
@@ -70,12 +75,10 @@ const UserSignupPage: React.FC = () => {
   zxcvbnOptions.setOptions(options)
 
   useEffect(() => {
-    // パスワードがない場合はzxcvbnの結果をリセットする
     if (!password) {
       setResult(undefined);
       return;
     }
-    // 入力されたパスワードを用いてzxcvbnの結果を取得、useStateに格納する
     const newResult = zxcvbn(password);
     setResult(newResult);
   }, [password]);
@@ -152,7 +155,6 @@ const UserSignupPage: React.FC = () => {
             </div>
             <div className="mt-[20px]">
               <div className="flex w-full gap-[1%]">
-                {/* 強度を表す5段階のバーを表示 */}
                 {[0, 1, 2, 3, 4].map((v) => (
                   <div
                     className={`h-[4px] w-[24%] ${result ? getBarColor(v, result.score) : 'bg-gray-300'}`}
@@ -162,7 +164,6 @@ const UserSignupPage: React.FC = () => {
               </div>
               {result && result.score + 1}
             </div>
-            {/* feedback.warning がある場合は表示 */}
             {result?.feedback && <div className="text-[#f00]">{result.feedback.warning}</div>}
           </div>
 
@@ -196,4 +197,4 @@ const UserSignupPage: React.FC = () => {
   );
 };
 
-export default UserSignupPage;
+export default SignupForm;
