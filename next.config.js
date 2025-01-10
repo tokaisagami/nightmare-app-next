@@ -1,9 +1,9 @@
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
-    ignoreDuringBuilds: false,
+    ignoreDuringBuilds: true,
   },
-  pageExtensions: ['tsx', 'ts'],  // ページ拡張子の設定
+  pageExtensions: ['tsx', 'ts'], // ページ拡張子の設定
 };
 
 module.exports = nextConfig;

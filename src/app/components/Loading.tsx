@@ -17,8 +17,8 @@ const Loading: React.FC = () => {
       <div className="loading-overlay">
         <DotLoader 
           size={12}
-          color="#ec9aff"      // カスタマイズした色
-          between={3} // アニメーションの時間 (ミリ秒)
+          color="#ec9aff"
+          between={3}
         />
       </div>
     ) : null // ローディング完了後に表示するコンテンツがある場合は適宜調整

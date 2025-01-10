@@ -1,15 +1,18 @@
 # 基盤となるイメージ
-FROM node:18
+FROM node:18-alpine
 
 # 作業ディレクトリを設定
 WORKDIR /app
 
 # 依存関係をインストールする
-COPY package*.json ./
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm install next@14
 
 # アプリケーションのソースコードをコピー
 COPY . .
+
+# 環境変数の設定
+ENV NODE_ENV=production
 
 # アプリケーションをビルド
 RUN npm run build
