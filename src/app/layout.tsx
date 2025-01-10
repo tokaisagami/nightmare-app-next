@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Provider } from 'react-redux';
-import store from '../store/store'; // ストアをインポート
+import store from '../store/store';
 import localFont from "next/font/local";
 import "./globals.css";
-import "../styles/index.css"; // グローバルCSSをインポート
+import "../styles/index.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
